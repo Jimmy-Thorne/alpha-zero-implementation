@@ -4,17 +4,19 @@ from game import game
 
 class connect_4_game(game):
     """
-    Class that inherits the functionality of game, specifically implements for Connect 4
+    Class that inherits the functionality of game, specifically implements for Connect 4.
     """
 
-    def __init__(self):
+    def __init__(self, black_player, red_player):
         """
-        We initialize the game state to a 6 by 7 array of all 'O'
+        We initialize the game state to a 6 by 7 array of all 'O'.
         """
         self.game_state = np.full((6,7),'O')
         self.state_description = 'Black to play'
         self.current_player = 'B'
         self.valid_moves = self.get_valid_moves()
+        self.black_player = black_player
+        self.red_player = red_player
 
     def check_for_finality(self):
         # First check for horizontal wins
@@ -36,7 +38,7 @@ class connect_4_game(game):
                     if self.game_state[i,j] == 'R':
                         self.state_description = 'Red wins.'
                     else:
-                        self.state_description = 'Black wins'
+                        self.state_description = 'Black wins.'
                     return True
         
         # Third check for downwards diagonal wins
@@ -47,18 +49,18 @@ class connect_4_game(game):
                     if self.game_state[i,j] == 'R':
                         self.state_description = 'Red wins.'
                     else:
-                        self.state_description = 'Black wins'
+                        self.state_description = 'Black wins.'
                     return True
 
         # Fourth check for upwards diagonal wins
         for i in range(3,6):
             for j in range(4):
                 if self.game_state[i,j] == 'O': continue # Certainly isn't a win
-                if self.game_state[i,j] == self.game_state[i-1,j+1] == self.game_state[i-2,j+2] == self.game_state[i-2,j+2]:
+                if self.game_state[i,j] == self.game_state[i-1,j+1] == self.game_state[i-2,j+2] == self.game_state[i-3,j+3]:
                     if self.game_state[i,j] == 'R':
                         self.state_description = 'Red wins.'
                     else:
-                        self.state_description = 'Black wins'
+                        self.state_description = 'Black wins.'
                     return True
 
         # We have no connect 4's. Now check for a draw (no valid moves)
@@ -68,6 +70,9 @@ class connect_4_game(game):
         
         # Seems like the game can keep going
         return False
+
+    def get_game_state(self):
+        return self.game_state
 
     def get_valid_moves(self):
         valid_moves = []

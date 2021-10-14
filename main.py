@@ -1,21 +1,30 @@
 from connect_4_game import connect_4_game
+from player import player
+from random_player import random_player
+from manual_player import manual_player
+from connect_4_minimax_player import connect_4_minimax_player
 
-new_game = connect_4_game()
+num_black = 0
+num_red = 0
+num_draw = 0
 
-new_game.make_move('B1')
-new_game.make_move('R2')
-new_game.make_move('B2')
-new_game.make_move('R3')
-new_game.make_move('B5')
-new_game.make_move('R3')
-new_game.make_move('B3')
-new_game.make_move('R4')
-new_game.make_move('B4')
-new_game.make_move('R4')
-new_game.make_move('B4')
+for i in range(10):
 
-if new_game.check_for_finality():
-    new_game.show_game_state()
-else:
-    print('huh')
-    new_game.show_game_state()
+    player1 = random_player()
+    player2 = connect_4_minimax_player(4)
+
+    game = connect_4_game(player1, player2)
+
+    while not game.check_for_finality():    
+        player1.make_move(game)
+        if game.check_for_finality():
+            break
+        player2.make_move(game)
+
+    if game.state_description ==  'Red wins.': num_red += 1
+    elif game.state_description == 'Black wins.': num_black += 1
+    else: num_draw += 1
+
+print(num_black)
+print(num_red)
+print(num_draw)
