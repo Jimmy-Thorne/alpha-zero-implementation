@@ -3,8 +3,8 @@ class player():
     The abstract player class that all players must inherit from.
     """
 
-    def __init__(self):
-        self.player_name = ''
+    def __init__(self, name: str = None):
+        self.player_name = name
 
     def make_move(self, game):
         """
