@@ -7,35 +7,33 @@ class game():
     """
 
     def __init__(self, *players: player):
-        self.current_player = players[0]
+        self.current_player = players[0] # The first player to go will be the first player in the list
         self.board = board()
         self.players = players
 
-    def check_for_finality(self, board: board = None):
-        if board is None:
-            board = self.board
-        return False
+    def play(self, show_board_on_finality = False) -> None:
+        while True:
 
-    def get_valid_moves(self, board: board = None):
-        if board is None:
-            board = self.board
-        return []
+            # First the current player will select a move for the current board.
+            move = self.current_player.choose_move(self.board)
 
-    def make_move(self, move: str, board: board = None):
-        if board is None:
-            board = self.board
-        return False
+            # board.make_move(move) will always run.
+            # If it returns false we enter the if statement and loop back up, not changing players.
+            # as an invalid move has been made.
+            if not self.board.make_move(move):
+                print('Player ' + self.current_player.player_name + ' attempted invalid move: ' + move + ' in position')
+                self.board.show()
+                continue
 
-    def play(self):
-        while True:   
-            self.current_player.make_move(self)
-            if self.check_for_finality(): break
+            # Check to see if the game is over.
+            if self.board.check_for_finality():
+                # If we want to display the final board state, do that.
+                if show_board_on_finality:
+                    self.board.show()
+                break # Stop playing the game.
+
+            # If a valid move was made and the game is not over, move to the next player.
             if self.current_player == self.players[-1]:
                 self.current_player = self.players[0]
             else:
-                self.current_player = self.players[self.players.index(self.current_player)+1]
-
-    def show_board(self, board: board = None):
-        if board is None:
-            board = self.board
-        pass
+                self.current_player = self.players[self.players.index(self.current_player) + 1]

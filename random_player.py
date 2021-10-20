@@ -1,5 +1,5 @@
 from player import player
-from game import game
+from board import board
 import random
 
 class random_player(player):
@@ -10,9 +10,9 @@ class random_player(player):
     def __init__(self):
         self.player_name = 'Random player'
 
-    def make_move(self, game):
-        valid_moves = game.get_valid_moves()
+    def choose_move(self, board: board) -> str:
+        valid_moves = board.get_valid_moves()
 
         num_moves = len(valid_moves)
 
-        game.make_move(valid_moves[random.randrange(num_moves)])
+        return valid_moves[random.randrange(num_moves)]

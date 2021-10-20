@@ -1,3 +1,5 @@
+from board import board
+
 class player():
     """
     The abstract player class that all players must inherit from.
@@ -6,8 +8,8 @@ class player():
     def __init__(self, name: str = None):
         self.player_name = name
 
-    def make_move(self, game):
+    def choose_move(self, board: board) -> str:
         """
-        The logic for choosing a move, and then calling the game to make the chosen move.
+        The logic for choosing a move on a board.
         """
-        pass
+        return None

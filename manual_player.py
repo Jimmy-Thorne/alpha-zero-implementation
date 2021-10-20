@@ -1,5 +1,5 @@
 from player import player
-from game import game
+from board import board
 
 class manual_player(player):
     """
@@ -9,14 +9,14 @@ class manual_player(player):
     def __init__(self, name):
         self.player_name = name
 
-    def make_move(self, game):
+    def choose_move(self, board: board) -> str:
         """
         A manual player must input a move into the console.
         """
 
-        valid_moves = game.get_valid_moves() # Just do this once now
+        valid_moves = board.get_valid_moves() # Just do this once now
 
-        game.show_game_state() # Show the state on the console
+        board.show_game_state() # Show the state on the console
         print('Valid moves: ' + str(valid_moves))
 
         chosen_move = ''
@@ -26,4 +26,4 @@ class manual_player(player):
             if chosen_move not in valid_moves:
                 print('Invalid move, try again...')
 
-        game.make_move(chosen_move)
+        return chosen_move

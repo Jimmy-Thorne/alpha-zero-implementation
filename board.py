@@ -7,10 +7,16 @@ class board():
     def __init__(self):
         self.current_player = None
         self.state = None
-        self.state_description = None
+        self.description = None
 
-    def get_valid_moves(self):
-        return []
-
-    def make_move(self, move: str):
+    def check_for_finality(self) -> bool:
         return False
+
+    def get_valid_moves(self) -> 'list[str]':
+        return []
+    
+    def make_move(self, move: str) -> bool:
+        return False
+
+    def show(self) -> None:
+        pass
