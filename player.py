@@ -5,8 +5,9 @@ class player():
     The abstract player class that all players must inherit from.
     """
 
-    def __init__(self, name: str = None):
-        self.player_name = name
+    def __init__(self, name: str = None, key: str = None):
+        self.name = name # A name for the player
+        self.key = key # A unique key for the player. Usually the color of pieces they control.
 
     def choose_move(self, board: board) -> str:
         """
