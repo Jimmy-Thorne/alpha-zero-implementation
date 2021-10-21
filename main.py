@@ -7,7 +7,7 @@ num_black = 0
 num_red = 0
 num_draw = 0
 
-for i in range(100):
+for i in range(10):
     player1 = connect_4_minimax_player(3)
     player2 = random_player()
 
