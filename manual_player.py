@@ -6,8 +6,9 @@ class manual_player(player):
     A player which choses it's moves via input from a user.
     """
 
-    def __init__(self, name):
-        self.player_name = name
+    def __init__(self, name = "Manual player", key = None):
+        self.name = name
+        self.key = key
 
     def choose_move(self, board: board) -> str:
         """

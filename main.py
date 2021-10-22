@@ -1,15 +1,16 @@
 from connect_4_game import connect_4_game
 from random_player import random_player
 from manual_player import manual_player
-from connect_4_minimax_player import connect_4_minimax_player
+from minimax_player import minimax_player
+import connect_4_value_functions
 
 num_black = 0
 num_red = 0
 num_draw = 0
 
-for i in range(100):
-    player1 = connect_4_minimax_player(3)
-    player2 = random_player()
+for i in range(10):
+    player1 = minimax_player(connect_4_value_functions.naive, 3)
+    player2 = minimax_player(connect_4_value_functions.naive, 3)
 
     game = connect_4_game(player1, player2)
 
