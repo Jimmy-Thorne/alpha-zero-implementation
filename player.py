@@ -13,3 +13,5 @@ class player():
         The logic for choosing a move on a board.
         """
         return None
+    
+   #Here is a new commit!
