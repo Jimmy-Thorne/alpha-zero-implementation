@@ -10,6 +10,7 @@ class connect_4_board(board):
         self.state = np.full((6,7),'O') # The board starts as all open spots
         self.description = 'Black to play.' # The board starts in this state
         self.current_player = 'B' # As black is the first player they are current after initialization
+        self.winner = None
 
     def check_for_finality(self):
         # First check for horizontal wins
@@ -19,8 +20,10 @@ class connect_4_board(board):
                 if self.state[i,j] == self.state[i,j+1] == self.state[i,j+2] == self.state[i,j+3]:
                     if self.state[i,j] == 'R':
                         self.description = 'Red wins.'
+                        self.winner = 'R'
                     else:
                         self.description = 'Black wins.'
+                        self.winner = 'B'
                     return True
         
         # Second check for vertical wins
@@ -30,8 +33,10 @@ class connect_4_board(board):
                 if self.state[i,j] == self.state[i+1,j] == self.state[i+2,j] == self.state[i+3,j]:
                     if self.state[i,j] == 'R':
                         self.description = 'Red wins.'
+                        self.winner = 'R'
                     else:
                         self.description = 'Black wins.'
+                        self.winner = 'B'
                     return True
         
         # Third check for downwards diagonal wins
@@ -41,8 +46,10 @@ class connect_4_board(board):
                 if self.state[i,j] == self.state[i+1,j+1] == self.state[i+2,j+2] == self.state[i+3,j+3]:
                     if self.state[i,j] == 'R':
                         self.description = 'Red wins.'
+                        self.winner = 'R'
                     else:
                         self.description = 'Black wins.'
+                        self.winner = 'B'
                     return True
 
         # Fourth check for upwards diagonal wins
@@ -52,13 +59,16 @@ class connect_4_board(board):
                 if self.state[i,j] == self.state[i-1,j+1] == self.state[i-2,j+2] == self.state[i-3,j+3]:
                     if self.state[i,j] == 'R':
                         self.description = 'Red wins.'
+                        self.winner = 'R'
                     else:
                         self.description = 'Black wins.'
+                        self.winner = 'B'
                     return True
 
         # We have no connect 4's. Now check for a draw (no valid moves)
         if self.get_valid_moves() == []:
             self.description = 'The game is a draw.'
+            self.winner = None
             return True
         
         # Seems like the game can keep going

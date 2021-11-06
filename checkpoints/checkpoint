@@ -1,0 +1,2 @@
+model_checkpoint_path: "best_c4_checkpoint"
+all_model_checkpoint_paths: "best_c4_checkpoint"

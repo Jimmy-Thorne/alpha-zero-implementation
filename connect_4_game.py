@@ -14,6 +14,13 @@ class connect_4_game(game):
         black_player.key = 'B'
         red_player.key = 'R'
         self.current_player = black_player
+        self.winner = None
 
     def play(self, show_state_on_finality = False):
-        return super().play(show_state_on_finality)
+        super().play(show_state_on_finality)
+        if self.board.winner == 'B':
+            self.winner = self.players[0]
+        elif self.board.winner == 'R':
+            self.winner = self.players[1]
+        else:
+            self.winner = None

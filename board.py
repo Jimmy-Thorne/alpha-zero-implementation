@@ -8,6 +8,7 @@ class board():
         self.current_player = None
         self.state = None
         self.description = None
+        self.winner = None
 
     def check_for_finality(self) -> bool:
         return False

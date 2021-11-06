@@ -1,0 +1,4 @@
+--- Testing best connect 4 nn report at 16:31:51 ---
+	Best nn wins: 39
+	Minimax player wins: 61
+	Draws: 0
