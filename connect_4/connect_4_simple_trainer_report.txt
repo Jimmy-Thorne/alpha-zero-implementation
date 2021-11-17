@@ -1,16 +1,4 @@
---- Testing best connect 4 nn report at 00:24:16 ---
-	Best nn wins: 5
-	Minimax player wins: 95
-	Draws: 0
---- Testing best connect 4 nn report at 00:33:04 ---
-	Best nn wins: 5
-	Minimax player wins: 95
-	Draws: 0
---- Testing best connect 4 nn report at 00:41:57 ---
+--- Testing best connect 4 nn report at 14:40:08 ---
 	Best nn wins: 0
 	Minimax player wins: 10
-	Draws: 0
---- Testing best connect 4 nn report at 10:09:25 ---
-	Best nn wins: 1
-	Minimax player wins: 9
 	Draws: 0

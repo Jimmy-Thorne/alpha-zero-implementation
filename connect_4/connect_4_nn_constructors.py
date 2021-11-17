@@ -35,21 +35,8 @@ def simple_conv_connect_4_nn(model_location: str = None, name: str = 'simple_con
     inputs = tf.keras.Input(shape = (6,7,2))
     outputs = convolutional_layer(inputs)
     outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
-    outputs = residual_layer(outputs)
     outputs = tf.keras.layers.Conv2D(1,(1,1),padding='same')(outputs)
     outputs = tf.keras.layers.Flatten()(outputs)
-    outputs = tf.keras.layers.Dense(64, activation = 'tanh',
-        kernel_initializer=tf.keras.initializers.RandomNormal(),
-        bias_initializer=tf.keras.initializers.RandomNormal())(outputs)
     outputs = tf.keras.layers.Dense(1, activation = 'tanh',
         kernel_initializer=tf.keras.initializers.RandomNormal())(outputs)
 
