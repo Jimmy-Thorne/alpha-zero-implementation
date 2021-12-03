@@ -122,3 +122,9 @@ class connect_4_board(board):
     def show(self) -> None:
         print(self.description)
         print(self.state)
+    
+    def reset(self) -> None:
+        self.state = np.full((6,7), 'O')
+        self.description = 'Black to play.'
+        self.current_player = 'B'
+        self.winner = None

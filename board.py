@@ -21,3 +21,6 @@ class board():
 
     def show(self) -> None:
         pass
+
+    def reset(self) -> None:
+        pass

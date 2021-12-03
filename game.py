@@ -13,7 +13,6 @@ class game():
 
     def play(self, show_board_on_finality = False) -> None:
         while True:
-
             # First the current player will select a move for the current board.
             move = self.current_player.choose_move(self.board)
 
@@ -37,3 +36,30 @@ class game():
                 self.current_player = self.players[0]
             else:
                 self.current_player = self.players[self.players.index(self.current_player) + 1]
+    
+    def play_many(self, rounds = 10):
+        dict = {}
+
+        for player in self.players:
+            dict[str(player)] = 0
+        dict['Draw'] = 0
+
+        for i in range(rounds):
+            print('Game {0}/{1}       '.format(i+1, rounds), end='\r')
+            self.current_player = self.players[i % len(self.players)]
+            self.board.reset()
+
+            self.play()
+
+            if self.board.winner is None:
+                dict['Draw'] += 1
+            else:
+                for player in self.players:
+                    if player.key == self.board.winner:
+                        dict[str(player)] += 1
+        
+        print('--- play_many report ---')
+        for player in self.players:
+            print('\t{0}: {1}'.format(str(player), dict[str(player)]))
+        print('\tDraws: {0}'.format(dict['Draw']))
+

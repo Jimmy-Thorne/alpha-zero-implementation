@@ -17,10 +17,10 @@ class nn():
 
     def __call__(self, board: board, player: player) -> float:
         result = self.model(np.array([self.board_to_array(board)]))
-        if board.current_player == player.key:
-            return result
+        if player.key == 'B':
+            return result[0]
         else:
-            return result * -1
+            return -1 * result[0]
 
     def load(self, model_location: str) -> None:
         self.model = tf.keras.models.load_model(model_location)

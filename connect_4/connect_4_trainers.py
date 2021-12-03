@@ -256,6 +256,7 @@ class simple_trainer():
     def train_from_file(self,
         file_location: str,
         batch_size = 256,
+        early_stopping = True,
         epochs = 512,
         initial_load = True,
         num_test = 100,
@@ -279,11 +280,13 @@ class simple_trainer():
             x_train.append(training_nn.board_to_array(tpl[0]))
             y_train.append(tpl[1])
         
-        my_callbacks = None
+        my_callbacks = []
 
         if tensorboard:
-            my_callbacks = tf.keras.callbacks.TensorBoard(log_dir='logs\\{0}_{1}'.format(training_nn.name, datetime.datetime.now().strftime("%H_%M_%S")))
-
+            my_callbacks.append(tf.keras.callbacks.TensorBoard(log_dir='logs\\{0}_{1}'.format(training_nn.name, datetime.datetime.now().strftime("%H_%M_%S"))))
+        if early_stopping:
+            my_callbacks.append(tf.keras.callbacks.EarlyStopping(patience=8, restore_best_weights=True))
+        
         training_nn.model.fit(
             np.array(x_train),
             np.array(y_train),
@@ -298,11 +301,11 @@ class simple_trainer():
 
         for i in range(num_test):
             if i % 2 == 0:
-                player1 = minimax_player(lambda x,y: training_nn(x,y), 1, name = 'train')
-                player2 = minimax_player(lambda x,y: best_nn(x,y), 1, name = 'best')
+                player1 = minimax_player(training_nn, 1, name = 'train')
+                player2 = minimax_player(best_nn, 1, name = 'best')
             else:
-                player1 = minimax_player(lambda x,y: best_nn(x,y), 1, name = 'best')
-                player2 = minimax_player(lambda x,y: training_nn(x,y), 1, name = 'train')      
+                player1 = minimax_player(best_nn, 1, name = 'best')
+                player2 = minimax_player(training_nn, 1, name = 'train')      
 
             game = connect_4_game(player1, player2)
 
@@ -334,6 +337,7 @@ class simple_trainer():
         player1: player,
         player2: player,
         num_games: int = 10000,
+        scale_factor: float = 0,
         verbose: bool = True):
 
         games = []
@@ -393,10 +397,18 @@ class simple_trainer():
 
             # Now loop through the boards and prepare training data
             for board in board_list:
+                index = board_list.index(board)
+
+                # k is 0 if it's the final board, and 1 if it's the first board
+                k = (len(board_list) - (index + 1))/(len(board_list) - 1)
+
+                # With the k above, we scale result by 1 if it's the last board,
+                # and scale_factor if it's the first board
+                # this factor exponentially decays backward
                 if board.current_player == 'B':
-                    games.append((board, result))
+                    games.append((board, np.power(scale_factor, k) * result))
                 else:
-                    games.append((board, -1 * result))
+                    games.append((board, -np.power(scale_factor, k) * result))
 
         with open(save_location, 'wb') as f:
             f.truncate(0)

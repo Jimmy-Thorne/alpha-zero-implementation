@@ -32,26 +32,32 @@ def simple_conv_connect_4_nn(model_location: str = None, name: str = 'simple_con
     """
     Constructs a simple convolutional neural network for connect 4.
     """
-    inputs = tf.keras.Input(shape = (6,7,2))
-    outputs = convolutional_layer(inputs)
-    outputs = residual_layer(outputs)
-    outputs = tf.keras.layers.Conv2D(1,(1,1),padding='same')(outputs)
-    outputs = tf.keras.layers.Flatten()(outputs)
-    outputs = tf.keras.layers.Dense(1, activation = 'tanh',
-        kernel_initializer=tf.keras.initializers.RandomNormal())(outputs)
-
-    model = tf.keras.Model(inputs = inputs, outputs = outputs)
-
-    loss_fn = tf.keras.losses.MeanSquaredError()
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.01)
-
-    model.compile(optimizer=optimizer, loss=loss_fn)
-
+    
+    # In case we hit the exception we need to get in the elif anyways
+    construct_anyways = False
     if model_location is not None:
         try:
             model = tf.keras.models.load_model(model_location)
         except:
+            construct_anyways = True # Since the load didn't work, we want to end up in the elif
             print('Failed to load model from {0}. Continuing with random weights.'.format(model_location, name))
+    if (model_location is None) or construct_anyways:
+        inputs = tf.keras.Input(shape = (6,7,2))
+        outputs = convolutional_layer(inputs)
+        outputs = residual_layer(outputs)
+        outputs = tf.keras.layers.Flatten()(outputs)
+        outputs = tf.keras.layers.Dense(32, activation='relu')(outputs)
+        outputs = tf.keras.layers.Dense(16, activation = 'relu',
+            kernel_initializer=tf.keras.initializers.RandomNormal(),
+            bias_initializer=tf.keras.initializers.RandomNormal())(outputs)
+        outputs = tf.keras.layers.Dense(8, activation = 'relu',
+            kernel_initializer=tf.keras.initializers.RandomNormal(),
+            bias_initializer=tf.keras.initializers.RandomNormal())(outputs)
+        outputs = tf.keras.layers.Dense(1, activation = 'tanh',
+            kernel_initializer=tf.keras.initializers.RandomNormal())(outputs)
+        model = tf.keras.Model(inputs = inputs, outputs = outputs)
+
+    model.compile(optimizer='adam', loss=tf.keras.losses.MeanSquaredError())
     
     # Create the board conversion function
     def convert_board_to_tensor(board: connect_4_board) -> np.array:
