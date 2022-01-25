@@ -12,8 +12,15 @@ class player():
     def __str__(self) -> str:
         return self.name
 
+    def __str__(self) -> str:
+        return self.name
+
     def choose_move(self, board: board) -> str:
         """
         The logic for choosing a move on a board.
         """
+<<<<<<< HEAD
         return
+=======
+        return
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
