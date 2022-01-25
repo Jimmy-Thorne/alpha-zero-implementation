@@ -17,7 +17,11 @@ class connect_4_board(board):
         self.description = description # The board starts in this state
         self.current_player = current_player # As black is the first player they are current after initialization
         self.winner = winner
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
     def __repr__(self):
         if self.winner is None:
             return 'connect_4_board(state={0},description=\'{1}\',current_player=\'{2}\')'.format(np.array_repr(self.state),self.description,self.current_player)
@@ -36,7 +40,11 @@ class connect_4_board(board):
                         self.description = 'Black wins.'
                         self.winner = 'B'
                     return True
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
         # Second check for vertical wins
         for i in range(3):
             for j in range(7):
@@ -49,7 +57,11 @@ class connect_4_board(board):
                         self.description = 'Black wins.'
                         self.winner = 'B'
                     return True
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
         # Third check for downwards diagonal wins
         for i in range(3):
             for j in range(4):
@@ -81,7 +93,11 @@ class connect_4_board(board):
             self.description = 'The game is a draw.'
             self.winner = None
             return True
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
         # Seems like the game can keep going
         return False
 
@@ -91,7 +107,11 @@ class connect_4_board(board):
         for i in range(7):
             if self.state[0,i] == 'O': # Element in top of column
                 valid_moves.append(self.current_player+str(i+1)) # +1 to convert back to humanspeak
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
         return valid_moves
 
     def make_move(self, move: str):
@@ -117,14 +137,27 @@ class connect_4_board(board):
                 return True # Return that it's a successful move
             if i == 5:
                 print('End of column reached. Serious error.') # This should not be possible to reach
+<<<<<<< HEAD
                 return False
 
     def show(self) -> None:
         print(self.description)
         print(self.state)
 
+=======
+                return False 
+    
+    def show(self) -> None:
+        print(self.description)
+        print(self.state)
+    
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
     def reset(self) -> None:
         self.state = np.full((6,7), 'O')
         self.description = 'Black to play.'
         self.current_player = 'B'
+<<<<<<< HEAD
         self.winner = None
+=======
+        self.winner = None
+>>>>>>> edfc6e3d32e3698591983e51e9c240679150a5f9
