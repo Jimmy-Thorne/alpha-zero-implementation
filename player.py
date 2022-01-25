@@ -9,10 +9,11 @@ class player():
         self.name = name # A name for the player
         self.key = key # A unique key for the player. Usually the color of pieces they control.
 
+    def __str__(self) -> str:
+        return self.name
+
     def choose_move(self, board: board) -> str:
         """
         The logic for choosing a move on a board.
         """
-        return None
-    
-    # I can change the commit if I want?
+        return
