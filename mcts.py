@@ -6,7 +6,11 @@ from nn_temp import value
 import copy
 
 # For testing
+<<<<<<< HEAD
 from connect_4.connect_4_board import connect_4_board
+=======
+from connect_4_board import connect_4_board
+>>>>>>> nsalmon3-main
 
 class mcts():
 
