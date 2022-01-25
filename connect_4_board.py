@@ -22,7 +22,7 @@ class connect_4_board(board):
                     else:
                         self.description = 'Black wins.'
                     return True
-        
+
         # Second check for vertical wins
         for i in range(3):
             for j in range(7):
@@ -33,7 +33,7 @@ class connect_4_board(board):
                     else:
                         self.description = 'Black wins.'
                     return True
-        
+
         # Third check for downwards diagonal wins
         for i in range(3):
             for j in range(4):
@@ -60,7 +60,7 @@ class connect_4_board(board):
         if self.get_valid_moves() == []:
             self.description = 'The game is a draw.'
             return True
-        
+
         # Seems like the game can keep going
         return False
 
@@ -70,7 +70,7 @@ class connect_4_board(board):
         for i in range(7):
             if self.state[0,i] == 'O': # Element in top of column
                 valid_moves.append(self.current_player+str(i+1)) # +1 to convert back to humanspeak
-        
+
         return valid_moves
 
     def make_move(self, move: str):
@@ -80,7 +80,7 @@ class connect_4_board(board):
         """
         if move not in self.get_valid_moves():
             print("Invalid move, " + move + " attempted in position: ")
-            self.show_game_state()
+            self.show()     
             return False
         for i in range(6):
             # The move[1]-1 is because we will let users assume columns 1 - 7 while we have 0 based indexing
@@ -96,8 +96,8 @@ class connect_4_board(board):
                 return True # Return that it's a successful move
             if i == 5:
                 print('End of column reached. Serious error.') # This should not be possible to reach
-                return False 
-    
+                return False
+
     def show(self) -> None:
         print(self.description)
         print(self.state)
