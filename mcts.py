@@ -4,13 +4,10 @@ from wtree import wtree
 from nn_temp import policy
 from nn_temp import value
 import copy
+import numpy as np
 
 # For testing
-<<<<<<< HEAD
 from connect_4.connect_4_board import connect_4_board
-=======
-from connect_4_board import connect_4_board
->>>>>>> nsalmon3-main
 
 class mcts():
 
@@ -22,25 +19,37 @@ class mcts():
         self.valid_moves = self.board.get_valid_moves()
 
     def U_function(self,node):
-        return node.p
+        c = 1.15
+        return c*(node.p)/(1+node.N)
 
     def find_next_node(self):
         chitlins = []
-        for a in self.tree.children:
-            if self.tree.children[a]==[]:
+        stopper = True
+        node = self.tree.root
+        while stopper:
+            for a in self.tree.children[node]:
                 chitlins.append(a)
-        max = 0
-        inx = 0
-        for i in range(len(chitlins)):
-            QplusU = chitlins[i].Q + self.U_function(chitlins[i])
-            if QplusU > max:
-                max = QplusU
-                inx = i
-        return chitlins[inx]
+            max = 0
+            inx = 0
+            for i in range(len(chitlins)):
+                QplusU = chitlins[i].Q + self.U_function(chitlins[i])
+                if QplusU > max:
+                    max = QplusU
+                    inx = i
+            node = chitlins[inx]
+            if self.tree.children[node]==[]:
+                stopper = False
+            chitlins.clear()
+        return node
 
     def play_board(self,moves:list):
         for each in moves:
             self.dummy_board.make_move(each)
+
+    def tau(self,x,tau=2):
+        t = tau
+        float(x)
+        return (x**(1/t))
 
 
     def initial_population(self):
@@ -76,21 +85,32 @@ class mcts():
             new_data.pop(-1)
 
 
-    def select_final_move(self,random=False):
-        list_of_valid_nodes = self.tree.children[self.tree.root]
-        max = list_of_valid_nodes[0].N
-        indx = 0
-        index = 0
-        for each in list_of_valid_nodes:
-            if max < each.N:
-                max = each.N
-                index = indx
-            indx = indx + 1
-        print(list_of_valid_nodes[index].data)
-        return list_of_valid_nodes[index].data
+    def select_final_move(self,random,tau):
+        if random:
+            Ns = []
+            for each in self.tree.children[self.tree.root]:
+                Ns.append(each.N)
+            dist = [self.tau(x,tau) for x in Ns]
+            s = sum(dist)
+            dist = [x/s for x in dist]
+            return np.random.choice(self.valid_moves,1,True,dist)[0]
+
+        else:
+            list_of_valid_nodes = self.tree.children[self.tree.root]
+            max = list_of_valid_nodes[0].N
+            indx = 0
+            index = 0
+            for each in list_of_valid_nodes:
+                if max < each.N:
+                    max = each.N
+                    index = indx
+                indx = indx + 1
+            return list_of_valid_nodes[index].data[0]
 
 
-    def run(self,random=False):
+    def run(self,random=False,tau=2):
+        '''Main program to interate through a mcts.  random = False will deterministically select a final move, while True
+        will select a weighted average'''
         self.reset_dummy_board()
         self.initial_population()
         for n in range(self.depth):
@@ -100,7 +120,7 @@ class mcts():
             v = value(self.dummy_board)
             self.back_prop(k,v)
             self.reset_dummy_board()
-        return self.select_final_move()
+        return self.select_final_move(random,tau)
 
 
 
@@ -110,6 +130,5 @@ class mcts():
 
 
 brd = connect_4_board()
-a = mcts(brd,100)
-a.dummy_board.make_move('B1')
-a.run()
+a = mcts(brd,1600)
+print(a.run(True))
