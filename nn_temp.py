@@ -1,11 +1,7 @@
 #This is a temporary file for the neural network
 from random import random
 
-<<<<<<< HEAD
 from connect_4.connect_4_board import connect_4_board
-=======
-from connect_4_board import connect_4_board
->>>>>>> nsalmon3-main
 def policy(current_board):
 
     Valid_Moves = current_board.get_valid_moves()

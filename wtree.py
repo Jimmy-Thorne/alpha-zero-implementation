@@ -41,6 +41,14 @@ class wtree():
         #print("Following Node Added")
         #node.show_properties()
 
+    def reset(self):
+        self.node_list.clear()
+        self.children.clear()
+        self.root = node([],None,True)
+        self.children = {self.root:[]}
+        self.node_list = [self.root]
+
+
 a = wtree()
 b = node(['B1'])
 a.add_node(b)
